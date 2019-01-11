@@ -42,7 +42,7 @@ func main() {
 			if len(r) > 0 {
 				break
 			}
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(1000 * time.Millisecond)
 
 		}
 	}
@@ -60,7 +60,7 @@ func main() {
 		_, err := rClient.HMSet(
 			*keyName,
 			map[string]interface{}{
-				"role": *role,
+				"winner": *role,
 			}).Result()
 
 		if err != nil {
@@ -69,6 +69,12 @@ func main() {
 		}
 
 		rClient.HIncrBy(*keyName, fmt.Sprintf("%s_count", *role), 1)
+
+		if *role == "humidifier" {
+			rClient.HIncrBy(*keyName, "net_humidity", 1)
+		} else {
+			rClient.HIncrBy(*keyName, "net_humidity", -1)
+		}
 
 	}
 	fmt.Println("Number of iterations:", *redisCount)

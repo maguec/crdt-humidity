@@ -1,0 +1,17 @@
+digraph structs {
+    compound=true; 
+    ranksep=1.0; 
+    {rank=same Dehumidifier Humidifier Watcher}
+    
+    CRDB1 [label="{<f0> CRDB1|<f1> humidity:\l  - net_humidity\l  - humidifier_count\l  - dehumidifier_count\l  - winner\l}", color=Red, shape=Mrecord, rank=min];
+    CRDB2 [label="{<f0> CRDB2|<f1> humidity:\l  - net_humidity\l  - humidifier_count\l  - dehumidifier_count\l  - winner\l}", color=Red, shape=Mrecord, rank=min];
+    Humidifier [label="Humidifier", color=blue];
+    Dehumidifier [label="Dehumidifier", color=blue];
+    Watcher [label="Watcher", color=darkgreen];
+
+    CRDB1:f1 -> CRDB2:f1 [label="ACTIVE/ACTIVE", fontcolor=darkgreen, color=red, dir=both]
+    Humidifier -> CRDB1:f1 [label="R/W", fontcolor=darkgreen, color=darkgreen]
+    Dehumidifier -> CRDB2:f1 [label="R/W", fontcolor=darkgreen, color=darkgreen]
+    Watcher -> CRDB1:f1 [label="R", fontcolor=darkgreen, color=darkgreen]
+
+}
