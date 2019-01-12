@@ -41,6 +41,13 @@ func main() {
 		"dehumidifier_count",
 	).Result()
 
+	// On the first run these will all be nil so fill in n/a for easier viewing
+	for q := range r {
+		if r[q] == nil {
+			r[q] = "n/a"
+		}
+	}
+
 	fmt.Printf("%-16s %-16s\n", "key", "value")
 	fmt.Printf("---------------------------------------------\n")
 	fmt.Printf("%-16s %-16s\n", "lastwriter", r[0])
